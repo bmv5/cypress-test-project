@@ -1,19 +1,16 @@
 import FuelExpensePage from './fuelExpensePage'; // Імпортуємо FuelExpensePage
 
 class GaragePage {
-  visitAndLogin() {
+  visitPage() {
     const username = 'guest';
     const password = 'welcome2qauto';
     const url = `https://${username}:${password}@qauto.forstudy.space/`; 
-    cy.log(`Visiting URL: ${url}`);
-    cy.visit(url); // Авторизація через URL
-
-    // Логін через форму після переходу на сторінку
-    this.login();
+    cy.log(`Visiting as guest: ${url}`);
+    cy.visit(url);
   }
 
   login() {
-    cy.log('Attempting to log in...');
+    cy.log('Attempting to log in as test user...');
     cy.get('button.btn.btn-outline-white.header_signin').click();
     cy.get('#signinEmail').type('test1@example.com');
     cy.get('#signinPassword').type('Test1234', { sensitive: true });

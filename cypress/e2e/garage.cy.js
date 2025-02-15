@@ -6,7 +6,8 @@ describe('Garage Page Tests using POM', () => {
   const fuelExpensePage = new FuelExpensePage();
 
   beforeEach(() => {
-    garagePage.visitAndLogin();
+    garagePage.visitPage();
+    garagePage.login();
     garagePage.checkGaragePageLoaded();
   });
 
