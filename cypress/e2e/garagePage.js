@@ -75,61 +75,141 @@ class GaragePage {
     cy.log('Fuel expense added successfully!');
   }
 
+  //Видаляє всі машини, але падає через те, що очікує на машини після того як всі були видалені
+  // deleteAllCars() {
+  //   cy.url().then((currentUrl) => {
+  //     const baseUrl = Cypress.config('baseUrl') || 'https://qauto.forstudy.space';
+  //     cy.log(`Current URL: ${currentUrl}`);
+  //     cy.log(`Base URL from config: ${baseUrl}`);
+  
+  //     if (!baseUrl) {
+  //       throw new Error("baseUrl is not defined in Cypress config!");
+  //     }
+  
+  //     const garageUrl = `${baseUrl}/panel/garage`;
+  //     cy.log(`Garage URL: ${garageUrl}`);
+  
+  //     if (!currentUrl.includes('/panel/garage')) {
+  //       cy.log(`Navigating to: ${garageUrl}`);
+  //       cy.visit(garageUrl);
+  //     }
+  
+  //     cy.get('body').then(($body) => {
+  //       const carsCount = $body.find('.car.jumbotron').length;
+  //       cy.log(`Found ${carsCount} cars in garage.`);
+  
+  //       if (carsCount > 0) {
+  //         cy.log('Starting to remove cars...');
+          
+  //         let removedCars = 0;
+  
+  //         // Цикл для видалення кожної машини
+  //         cy.get('.car.jumbotron').each((car, index) => {
+  //           cy.wrap(car).within(() => {
+  //             // Для кожної машини клікаємо на кнопку редагування
+  //             cy.get('button.car_edit').should('be.visible').click();
+  //           });
+  
+  //           // Клікаємо на кнопку видалення машини
+  //           cy.get('button.btn-outline-danger').contains('Remove car').should('be.visible').click();
+  //           cy.get('button.btn-danger').contains('Remove').should('be.visible').click();
+  
+  //           cy.wait(1000);
+  
+  //           cy.log(`Car ${index + 1} removed.`);
+  
+  //           removedCars++;
+  
+  //           // Якщо залишились машини, чекаємо перед наступним видаленням
+  //           if (removedCars < carsCount) {
+  //             cy.wait(3000); // Чекаємо 3 секунди перед наступним видаленням
+  //             cy.get('.car.jumbotron').should('have.length', carsCount - removedCars); // перевіряємо, що машини оновились
+  //           }
+  //         });
+  
+  //         // Тепер перевіряємо, що всі машини видалені
+  //         cy.get('.car.jumbotron', { timeout: 10000 }).should('not.exist');
+  //         cy.log('All cars deleted.');
+  //       } else {
+  //         cy.log('No cars to delete.');
+  //       }
+  //     });
+  //   });
+  // }
+  
   deleteAllCars() {
     cy.url().then((currentUrl) => {
-      const baseUrl = Cypress.config('baseUrl');
-
+      const baseUrl = Cypress.config('baseUrl') || 'https://qauto.forstudy.space';
       cy.log(`Current URL: ${currentUrl}`);
       cy.log(`Base URL from config: ${baseUrl}`);
-
+  
       if (!baseUrl) {
         throw new Error("baseUrl is not defined in Cypress config!");
       }
-
+  
       const garageUrl = `${baseUrl}/panel/garage`;
       cy.log(`Garage URL: ${garageUrl}`);
-
+  
       if (!currentUrl.includes('/panel/garage')) {
         cy.log(`Navigating to: ${garageUrl}`);
         cy.visit(garageUrl);
       }
-
+  
       cy.get('body').then(($body) => {
         const carsCount = $body.find('.car.jumbotron').length;
         cy.log(`Found ${carsCount} cars in garage.`);
-
+  
         if (carsCount > 0) {
-          cy.get('.car.jumbotron').first().within(() => {
-            cy.get('button.car_edit').should('be.visible').click();
+          cy.log('Starting to remove cars...');
+          
+          let removedCars = 0;
+  
+          // Цикл для видалення кожної машини
+          cy.get('.car.jumbotron').each((car, index) => {
+            cy.wrap(car).within(() => {
+              // Для кожної машини клікаємо на кнопку редагування
+              cy.get('button.car_edit').should('be.visible').click();
+            });
+  
+            // Клікаємо на кнопку видалення машини
+            cy.get('button.btn-outline-danger').contains('Remove car').should('be.visible').click();
+            cy.get('button.btn-danger').contains('Remove').should('be.visible').click();
+  
+            cy.wait(1000);
+  
+            cy.log(`Car ${index + 1} removed.`);
+  
+            removedCars++;
+  
+            // Перевіряємо наявність машин після кожного видалення
+            cy.get('.car.jumbotron').should('have.length', carsCount - removedCars); // перевіряємо, що машини оновились
+  
+            // Якщо залишились машини, чекаємо перед наступним видаленням
+            if (removedCars < carsCount) {
+              cy.wait(3000); // Чекаємо 3 секунди перед наступним видаленням
+            }
           });
-
-          cy.get('button.btn-outline-danger').contains('Remove car').should('be.visible').click();
-          cy.get('button.btn-danger').contains('Remove').should('be.visible').click();
-
-          cy.wait(1000);
-          
-          cy.log('Waiting for car to be removed...');
-          cy.get('.car.jumbotron', { timeout: 5000 }).should('not.exist');
-          
-          cy.log('Car removed, checking for more...');
-          this.deleteAllCars();
-        } else {
+  
+          // Після того, як всі машини видалені, припиняємо очікувати на список машин
+          cy.get('.car.jumbotron', { timeout: 10000 }).should('not.exist');
           cy.log('All cars deleted.');
+  
+          // Перевіряємо, чи потрібно чекати на запит getCars
+          cy.intercept('GET', '/api/cars').as('getCars');  // Заміни на правильний запит
+  
+          // Якщо більше не залишається машин, припиняємо чекати на запит
+          cy.get('.car.jumbotron').should('not.exist'); // Перевіряємо, чи всі машини видалені
+          cy.wait('@getCars', { timeout: 0 }).should('not.exist'); // Якщо машин більше немає, не чекаємо на запит
+        } else {
+          cy.log('No cars to delete.');
         }
       });
     });
   }
-
-  checkGarageIsEmpty() {
-    cy.log('Checking if the garage is empty...');
-    cy.get('.panel-empty_message', { timeout: 7000 }).should('be.visible')
-      .and('have.text', "You don’t have any cars in your garage");
-  }
-
-  checkNoCars() {
-    cy.log('Checking that no cars exist in the garage...');
-    cy.get('.car.jumbotron', { timeout: 10000 }).should('not.exist');
-  }
+  
+  
+  
+  
 }
 
 export default GaragePage;
