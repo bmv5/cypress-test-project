@@ -1,5 +1,5 @@
-import GaragePage from './garagePage';
-import FuelExpensePage from './fuelExpensePage';
+import GaragePage from './garagePage2';
+import FuelExpensePage from './fuelExpensePage2';
 
 describe('Garage Page Tests using POM', () => {
   const garagePage = new GaragePage();

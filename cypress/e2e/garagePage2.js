@@ -1,4 +1,4 @@
-import FuelExpensePage from './fuelExpensePage'; // Імпортуємо FuelExpensePage
+import FuelExpensePage from './fuelExpensePage2'; // Імпортуємо FuelExpensePage
 
 class GaragePage {
   visitPage() {
