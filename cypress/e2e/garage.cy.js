@@ -8,50 +8,47 @@ describe('Garage Page Tests using POM', () => {
     mileage: '50000'
   };
 
-  let carId; // Змінна для збереження id автомобіля
+  let carId; // Змінна для збереження ID створеної машини
 
   beforeEach(() => {
     garagePage.visitPage();
     garagePage.login();
     garagePage.checkGaragePageLoaded();
-    // Перехоплюємо запит на додавання автомобіля
     cy.intercept('POST', '/api/cars').as('addCarRequest');
   });
 
-  it('should add a car successfully', () => {
-    // Додаємо автомобіль
+  it('should add a car and validate its presence in the cars list', () => {
+    // Додаємо автомобіль через UI
     garagePage.addCar(carDetails);
 
-    // Перевіряємо, що запит на додавання авто завершився успішно
+    // Перехоплюємо запит і отримуємо ID створеної машини
     cy.wait('@addCarRequest').then((interception) => {
-      console.log(interception.response.body); // Вивести відповідь у консоль для аналізу
-      expect(interception.response.statusCode).to.eq(201); // Очікуємо статус 201 - створено
-
-      // Перевірка, чи є властивість 'data' і чи це об'єкт
-      expect(interception.response.body.data).to.be.an('object');
-      
-      // Перевіряємо, чи має об'єкт властивість 'id'
-      expect(interception.response.body.data).to.have.property('id');
-      
-      // Зберігаємо id створеного автомобіля у змінну
+      expect(interception.response.statusCode).to.eq(201);
       carId = interception.response.body.data.id;
+      expect(carId).to.exist; // Переконуємося, що ID отримано
 
-      // Додатково можна вивести id в консоль для перевірки
-      console.log('Car ID:', carId);
-    });
-  });
-
-  // Приклад тесту для використання збереженого id
-  it('should verify car exists by id', () => {
-    cy.request(`/api/cars/${carId}`).then((response) => {
-      console.log('Response Body:', response.body); // Вивести весь об'єкт відповіді
-      expect(response.status).to.eq(200);
+      // Робимо GET-запит, щоб отримати список машин
+      cy.request('/api/cars').then((response) => {
+        const cars = response.body.data;
       
-      // Перевірити, чи є 'id' у відповіді
-      expect(response.body.data).to.have.property('id', carId);
-
+        console.log("Full Cars List:", cars);
+        cy.log(`Full Cars List: ${JSON.stringify(cars)}`);
+      
+        const addedCar = cars.find(car => car.id === carId);
+      
+        console.log("Found Car:", addedCar);
+        cy.log(`Found Car: ${JSON.stringify(addedCar)}`);
+      
+        expect(addedCar).to.exist;
+      
+        // Перевірка:
+        expect(addedCar.brand).to.eq(carDetails.brand); // brand в відповіді API
+        expect(addedCar.model).to.eq(carDetails.model); // model в відповіді API
+        expect(addedCar.mileage).to.eq(Number(carDetails.mileage)); // mileage в відповіді API
+      });
+      
+      
+      
     });
   });
-
-
 });

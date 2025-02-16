@@ -30,12 +30,19 @@ class GaragePage {
 
   fillCarForm(carDetails) {
     cy.log(`Filling car form with details: ${JSON.stringify(carDetails)}`);
-
+  
     // Перехоплення запиту на створення машини
     cy.intercept('POST', '/api/cars').as('addCarRequest');
-
+  
+    // Вибір бренду
     cy.get('select[name="carBrandId"]').select(carDetails.brand);
-    cy.get('select[name="carModelId"]').select(carDetails.model);
+  
+    // Очікуємо, поки модель стане активною, і лише потім обираємо її
+    cy.get('select[name="carModelId"]')
+      .should('not.be.disabled') // Чекаємо, поки стане активним
+      .select(carDetails.model);
+  
+    // Введення пробігу
     cy.get('input[name="mileage"]')
       .should('be.visible')
       .click({ force: true })
@@ -43,13 +50,15 @@ class GaragePage {
       .type('{selectall}{backspace}')
       .type(carDetails.mileage, { force: true })
       .blur();
-
+  
+    // Натискання кнопки "Add"
     cy.get('.modal .btn.btn-primary')
       .should('not.be.disabled')
       .click();
-
+  
     cy.log('Car form submitted successfully!');
   }
+  
 
   waitForCarCreation() {
     cy.wait('@addCarRequest').then((interception) => {
