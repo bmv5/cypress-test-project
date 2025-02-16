@@ -1,0 +1,106 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-02-15T18:44:22.187Z",
+    "end": "2025-02-15T18:44:24.983Z",
+    "duration": 2796,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "5c00b6cb-af3a-4e8c-be4c-89c1cca5a18c",
+      "title": "",
+      "fullFile": "cypress\\e2e\\sample.cy.js",
+      "file": "cypress\\e2e\\sample.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "dda5407d-7a8f-49d5-8460-985f2f93715e",
+          "title": "Простий тест",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Відкриває сайт і перевіряє заголовок",
+              "fullTitle": "Простий тест Відкриває сайт і перевіряє заголовок",
+              "timedOut": null,
+              "duration": 1412,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('https://google.com'); // Замініть на свій сайт\n//cy.title().should('include', 'Example Domain'); // Перевіряємо, що заголовок містить \"Example Domain\"",
+              "err": {},
+              "uuid": "35695683-07ad-4cc6-9e16-b600ae962a06",
+              "parentUUID": "dda5407d-7a8f-49d5-8460-985f2f93715e",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "35695683-07ad-4cc6-9e16-b600ae962a06"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1412,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports/qauto",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "charts": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

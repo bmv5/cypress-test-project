@@ -1,0 +1,133 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 0,
+    "pending": 0,
+    "failures": 2,
+    "start": "2025-02-15T19:00:30.264Z",
+    "end": "2025-02-15T19:00:44.585Z",
+    "duration": 14321,
+    "testsRegistered": 2,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "a149c4dd-ea4b-47fe-95b8-c3ec6031f7e2",
+      "title": "",
+      "fullFile": "cypress\\e2e\\garage.cy.js",
+      "file": "cypress\\e2e\\garage.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "4257ee17-8739-4cab-ac9b-de6d158a565f",
+          "title": "Garage Page Tests using POM",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should open the Add Car modal, enter values, check validation, and close it",
+              "fullTitle": "Garage Page Tests using POM should open the Add Car modal, enter values, check validation, and close it",
+              "timedOut": null,
+              "duration": 9168,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const carDetails = {\n  brand: 'Audi',\n  model: 'TT',\n  mileage: '50000'\n};\ngaragePage.openAddCarModal();\ngaragePage.fillCarForm(carDetails);\ngaragePage.closeAddCarModal();",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `app-add-car-form`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `app-add-car-form`, but never found it.\n    at GaragePage.closeAddCarModal (webpack://cypress-test-project/./cypress/e2e/garagePage.js:50:31)\n    at Context.eval (webpack://cypress-test-project/./cypress/e2e/garage.cy.js:22:15)",
+                "diff": null
+              },
+              "uuid": "29f6a684-e1de-4cac-8a7e-cc147774bb71",
+              "parentUUID": "4257ee17-8739-4cab-ac9b-de6d158a565f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should add a car, open the fuel expense modal, fill the form, and add expense",
+              "fullTitle": "Garage Page Tests using POM should add a car, open the fuel expense modal, fill the form, and add expense",
+              "timedOut": null,
+              "duration": 166,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const carDetails = {\n  brand: 'Audi',\n  model: 'TT',\n  mileage: '50000'\n};\n// Додаємо автомобіль лише якщо його ще немає\ngaragePage.addCar(carDetails);\n// Переходимо у вкладку \"Fuel Expenses\"\nfuelExpensePage.navigateToExpenses();\n// Вибираємо перший автомобіль у списку\nfuelExpensePage.selectFirstCar();\n// Відкриваємо модалку витрат на паливо\nfuelExpensePage.openAddExpenseModal();\n// Заповнюємо форму\nconst expenseDetails = {\n  mileage: '70000',\n  liters: '50',\n  totalCost: '100'\n};\nfuelExpensePage.fillExpenseForm(expenseDetails);\nfuelExpensePage.submitExpense();",
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\nhttps://qauto.forstudy.space/panel/garage\n\nThe response we received from your web server was:\n\n  > 401: Unauthorized\n\nThis was considered a failure because the status code was not `2xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\nBecause this error occurred during a `after all` hook we are skipping the remaining tests in the current suite: `Garage Page Tests using POM`",
+                "estack": "CypressError: `cy.visit()` failed trying to load:\n\nhttps://qauto.forstudy.space/panel/garage\n\nThe response we received from your web server was:\n\n  > 401: Unauthorized\n\nThis was considered a failure because the status code was not `2xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\nBecause this error occurred during a `after all` hook we are skipping the remaining tests in the current suite: `Garage Page Tests using POM`\n    at <unknown> (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:131314:76)\n    at visitFailedByErr (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:130720:12)\n    at <unknown> (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:131297:13)\n    at tryCatcher (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:1667:18)\n    at _drainQueueStep (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:2377:12)\n    at _drainQueue (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:2370:9)\n    at Async._drainQueues (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:2386:5)\n    at Async.drainQueues (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:2256:14)",
+                "diff": null
+              },
+              "uuid": "a962b16c-5208-4727-b3f4-d78a6325f988",
+              "parentUUID": "4257ee17-8739-4cab-ac9b-de6d158a565f",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "29f6a684-e1de-4cac-8a7e-cc147774bb71",
+            "a962b16c-5208-4727-b3f4-d78a6325f988"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 9334,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports/qauto",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "charts": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

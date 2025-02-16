@@ -1,0 +1,163 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-02-15T18:43:21.247Z",
+    "end": "2025-02-15T18:43:26.603Z",
+    "duration": 5356,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "6735b8c5-38e9-4baa-8ffb-54c3e3eea3e7",
+      "title": "",
+      "fullFile": "cypress\\e2e\\login_form.cy.js",
+      "file": "cypress\\e2e\\login_form.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "051406e3-c16d-4ebb-9f5b-040b243590a0",
+          "title": "Login Form",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should open the login modal when clicking the Sign in button",
+              "fullTitle": "Login Form should open the login modal when clicking the Sign in button",
+              "timedOut": null,
+              "duration": 1488,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('button.btn.btn-outline-white.header_signin').click();\ncy.get('.modal-body').should('be.visible');",
+              "err": {},
+              "uuid": "e625d4d3-2be7-4851-89c7-6f4dd4eb44cd",
+              "parentUUID": "051406e3-c16d-4ebb-9f5b-040b243590a0",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should show login form inside the modal",
+              "fullTitle": "Login Form should show login form inside the modal",
+              "timedOut": null,
+              "duration": 729,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('button.btn.btn-outline-white.header_signin').click();\ncy.get('.modal-body').should('be.visible');\ncy.get('#signinEmail').should('be.visible');\ncy.get('#signinPassword').should('be.visible');",
+              "err": {},
+              "uuid": "2ad9eff9-88f2-44e1-9c66-65d1498f98f9",
+              "parentUUID": "051406e3-c16d-4ebb-9f5b-040b243590a0",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should be able to login with correct credentials and land on garage page",
+              "fullTitle": "Login Form should be able to login with correct credentials and land on garage page",
+              "timedOut": null,
+              "duration": 2065,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('button.btn.btn-outline-white.header_signin').click();\ncy.get('#signinEmail').type('test1@example.com');\ncy.get('#signinPassword').type('Test1234', {\n  sensitive: true\n}); // Пароль маскується в логах\ncy.get('.modal-footer > .btn-primary').click();\ncy.url().should('eq', 'https://qauto.forstudy.space/panel/garage');\ncy.get('.container', {\n  timeout: 15000\n}).should('be.visible');",
+              "err": {},
+              "uuid": "3e035528-e04c-4672-804a-5b14e3182493",
+              "parentUUID": "051406e3-c16d-4ebb-9f5b-040b243590a0",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should be able to close the login modal",
+              "fullTitle": "Login Form should be able to close the login modal",
+              "timedOut": null,
+              "duration": 840,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('button.btn.btn-outline-white.header_signin').click();\ncy.get('.modal-body').should('be.visible');\ncy.get('.close > span').click();\ncy.get('.modal-body').should('not.exist');",
+              "err": {},
+              "uuid": "2c0d201f-4ad5-4481-81a8-999473dc0590",
+              "parentUUID": "051406e3-c16d-4ebb-9f5b-040b243590a0",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "e625d4d3-2be7-4851-89c7-6f4dd4eb44cd",
+            "2ad9eff9-88f2-44e1-9c66-65d1498f98f9",
+            "3e035528-e04c-4672-804a-5b14e3182493",
+            "2c0d201f-4ad5-4481-81a8-999473dc0590"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5122,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports/qauto",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "charts": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 0,
+    "pending": 0,
+    "failures": 2,
+    "start": "2025-02-15T18:42:49.788Z",
+    "end": "2025-02-15T18:43:09.705Z",
+    "duration": 19917,
+    "testsRegistered": 2,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 1,
+    "hasOther": true,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "df5f871d-420d-4eb1-8e2e-4cc56c4f985b",
+      "title": "",
+      "fullFile": "cypress\\e2e\\garage.cy.js",
+      "file": "cypress\\e2e\\garage.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "6ed35cb7-0d55-442c-a94a-16c4af33b227",
+          "title": "Garage Page Tests using POM",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should open the Add Car modal, enter values, check validation, and close it",
+              "fullTitle": "Garage Page Tests using POM should open the Add Car modal, enter values, check validation, and close it",
+              "timedOut": null,
+              "duration": 9310,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const carDetails = {\n  brand: 'Audi',\n  model: 'TT',\n  mileage: '50000'\n};\ngaragePage.openAddCarModal();\ngaragePage.fillCarForm(carDetails);\ngaragePage.closeAddCarModal();",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `modal-body`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `modal-body`, but never found it.\n    at GaragePage.closeAddCarModal (webpack://cypress-test-project/./cypress/e2e/garagePage.js:50:25)\n    at Context.eval (webpack://cypress-test-project/./cypress/e2e/garage.cy.js:22:15)",
+                "diff": null
+              },
+              "uuid": "5f5b4560-c552-494d-b426-e46b2c27400d",
+              "parentUUID": "6ed35cb7-0d55-442c-a94a-16c4af33b227",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should add a car, open the fuel expense modal, fill the form, and add expense",
+              "fullTitle": "Garage Page Tests using POM should add a car, open the fuel expense modal, fill the form, and add expense",
+              "timedOut": null,
+              "duration": 4207,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const carDetails = {\n  brand: 'Audi',\n  model: 'TT',\n  mileage: '50000'\n};\n// Додаємо автомобіль лише якщо його ще немає\ngaragePage.addCar(carDetails);\n// Переходимо у вкладку \"Fuel Expenses\"\nfuelExpensePage.navigateToExpenses();\n// Вибираємо перший автомобіль у списку\nfuelExpensePage.selectFirstCar();\n// Відкриваємо модалку витрат на паливо\nfuelExpensePage.openAddExpenseModal();\n// Заповнюємо форму\nconst expenseDetails = {\n  mileage: '70000',\n  liters: '50',\n  totalCost: '100'\n};\nfuelExpensePage.fillExpenseForm(expenseDetails);\nfuelExpensePage.submitExpense();",
+              "err": {
+                "message": "CypressError: Timed out retrying after 4050ms: `cy.click()` failed because this element:\n\n`<button _ngcontent-fmy-c73=\"\" class=\"car_edit btn btn-edit\">...</button>`\n\nis being covered by another element:\n\n`<ngb-modal-window role=\"dialog\" tabindex=\"-1\" aria-modal=\"true\" class=\"d-block modal fade show\">...</ngb-modal-window>`\n\nFix this problem, or use {force: true} to disable error checking.\n\nhttps://on.cypress.io/element-cannot-be-interacted-with\n\nBecause this error occurred during a `after all` hook we are skipping the remaining tests in the current suite: `Garage Page Tests using POM`",
+                "estack": "CypressError: Timed out retrying after 4050ms: `cy.click()` failed because this element:\n\n`<button _ngcontent-fmy-c73=\"\" class=\"car_edit btn btn-edit\">...</button>`\n\nis being covered by another element:\n\n`<ngb-modal-window role=\"dialog\" tabindex=\"-1\" aria-modal=\"true\" class=\"d-block modal fade show\">...</ngb-modal-window>`\n\nFix this problem, or use {force: true} to disable error checking.\n\nhttps://on.cypress.io/element-cannot-be-interacted-with\n\nBecause this error occurred during a `after all` hook we are skipping the remaining tests in the current suite: `Garage Page Tests using POM`\n    at ensureIsDescendent (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:111971:68)\n    at ensureDescendents (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:112022:5)\n    at ensureDescendentsAndScroll (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:112028:14)\n    at ensureElIsNotCovered (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:112159:5)\n    at runAllChecks (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:112358:52)\n    at retryActionability (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:112395:16)\n    at tryCatcher (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise.attempt.Promise.try (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:4285:29)\n    at whenStable (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:143474:68)\n    at <unknown> (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:143415:14)\n    at tryCatcher (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:1671:18)\n    at Promise._fulfill (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:1615:18)\n    at <unknown> (https://qauto.forstudy.space/__cypress/runner/cypress_runner.js:5420:46)",
+                "diff": null
+              },
+              "uuid": "cdbd9bb6-8380-41b0-aa67-e87e7f206d82",
+              "parentUUID": "6ed35cb7-0d55-442c-a94a-16c4af33b227",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "5f5b4560-c552-494d-b426-e46b2c27400d",
+            "cdbd9bb6-8380-41b0-aa67-e87e7f206d82"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 13517,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports/qauto",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "charts": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
