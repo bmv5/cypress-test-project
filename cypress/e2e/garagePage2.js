@@ -1,10 +1,10 @@
-import FuelExpensePage from './fuelExpensePage2'; // Імпортуємо FuelExpensePage
+import FuelExpensePage from './fuelExpensePage'; // Імпортуємо FuelExpensePage
 
 class GaragePage {
   visitPage() {
     const username = 'guest';
     const password = 'welcome2qauto';
-    const url = `https://${username}:${password}@qauto.forstudy.space/`; 
+    const url = `https://${username}:${password}@qauto2.forstudy.space/`; 
     cy.log(`Visiting as guest: ${url}`);
     cy.visit(url);
   }
