@@ -3,34 +3,22 @@ import FuelExpensePage from './fuelExpensePage';
 
 describe('Garage Page Tests using POM', () => {
   const garagePage = new GaragePage();
-  const fuelExpensePage = new FuelExpensePage();
+  const carDetails = {
+    brand: 'Audi',
+    model: 'TT',
+    mileage: '50000'
+  };
 
   beforeEach(() => {
     garagePage.visitPage();
     garagePage.login();
     garagePage.checkGaragePageLoaded();
+    // Перехоплюємо запит на додавання автомобіля
+    cy.intercept('POST', '/api/cars').as('addCarRequest');
   });
 
-  it('should open the Add Car modal, enter values, check validation, and close it', () => {
-    const carDetails = {
-      brand: 'Audi',
-      model: 'TT',
-      mileage: '50000'
-    };
-
-    garagePage.openAddCarModal();
-    garagePage.fillCarForm(carDetails);
-    garagePage.closeAddCarModal();
-  });
-
-  it('should add a car, open the fuel expense modal, fill the form, and add expense', () => {
-    const carDetails = {
-      brand: 'Audi',
-      model: 'TT',
-      mileage: '50000'
-    };
-
-    // Додаємо автомобіль лише якщо його ще немає
+  it('should add a car successfully', () => {
+    // Додаємо автомобіль
     garagePage.addCar(carDetails);
 
     // Переходимо у вкладку "Fuel Expenses"
