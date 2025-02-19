@@ -1,6 +1,6 @@
-import FuelExpensePage from './fuelExpensePage'; // Імпортуємо FuelExpensePage
+import FuelExpensePage2 from './fuelExpensePage2'; // Імпортуємо FuelExpensePage
 
-class GaragePage {
+class GaragePage2 {
   visitPage() {
     const username = 'guest';
     const password = 'welcome2qauto';
@@ -12,7 +12,7 @@ class GaragePage {
   login() {
     cy.log('Attempting to log in as test user...');
     cy.get('button.btn.btn-outline-white.header_signin').click();
-    cy.get('#signinEmail').type('test1@example.com');
+    cy.get('#signinEmail').type('test2@example.com');
     cy.get('#signinPassword').type('Test1234', { sensitive: true });
     cy.get('.modal-footer > .btn-primary').click();
     cy.url().should('include', '/garage');
@@ -137,79 +137,79 @@ class GaragePage {
   //   });
   // }
   
-  deleteAllCars() {
-    cy.url().then((currentUrl) => {
-      const baseUrl = Cypress.config('baseUrl') || 'https://qauto.forstudy.space';
-      cy.log(`Current URL: ${currentUrl}`);
-      cy.log(`Base URL from config: ${baseUrl}`);
+  // deleteAllCars() {
+  //   cy.url().then((currentUrl) => {
+  //     const baseUrl = Cypress.config('baseUrl') || 'https://qauto.forstudy.space';
+  //     cy.log(`Current URL: ${currentUrl}`);
+  //     cy.log(`Base URL from config: ${baseUrl}`);
   
-      if (!baseUrl) {
-        throw new Error("baseUrl is not defined in Cypress config!");
-      }
+  //     if (!baseUrl) {
+  //       throw new Error("baseUrl is not defined in Cypress config!");
+  //     }
   
-      const garageUrl = `${baseUrl}/panel/garage`;
-      cy.log(`Garage URL: ${garageUrl}`);
+  //     const garageUrl = `${baseUrl}/panel/garage`;
+  //     cy.log(`Garage URL: ${garageUrl}`);
   
-      if (!currentUrl.includes('/panel/garage')) {
-        cy.log(`Navigating to: ${garageUrl}`);
-        cy.visit(garageUrl);
-      }
+  //     if (!currentUrl.includes('/panel/garage')) {
+  //       cy.log(`Navigating to: ${garageUrl}`);
+  //       cy.visit(garageUrl);
+  //     }
   
-      cy.get('body').then(($body) => {
-        const carsCount = $body.find('.car.jumbotron').length;
-        cy.log(`Found ${carsCount} cars in garage.`);
+  //     cy.get('body').then(($body) => {
+  //       const carsCount = $body.find('.car.jumbotron').length;
+  //       cy.log(`Found ${carsCount} cars in garage.`);
   
-        if (carsCount > 0) {
-          cy.log('Starting to remove cars...');
+  //       if (carsCount > 0) {
+  //         cy.log('Starting to remove cars...');
           
-          let removedCars = 0;
+  //         let removedCars = 0;
   
-          // Цикл для видалення кожної машини
-          cy.get('.car.jumbotron').each((car, index) => {
-            cy.wrap(car).within(() => {
-              // Для кожної машини клікаємо на кнопку редагування
-              cy.get('button.car_edit').should('be.visible').click();
-            });
+  //         // Цикл для видалення кожної машини
+  //         cy.get('.car.jumbotron').each((car, index) => {
+  //           cy.wrap(car).within(() => {
+  //             // Для кожної машини клікаємо на кнопку редагування
+  //             cy.get('button.car_edit').should('be.visible').click();
+  //           });
   
-            // Клікаємо на кнопку видалення машини
-            cy.get('button.btn-outline-danger').contains('Remove car').should('be.visible').click();
-            cy.get('button.btn-danger').contains('Remove').should('be.visible').click();
+  //           // Клікаємо на кнопку видалення машини
+  //           cy.get('button.btn-outline-danger').contains('Remove car').should('be.visible').click();
+  //           cy.get('button.btn-danger').contains('Remove').should('be.visible').click();
   
-            cy.wait(1000);
+  //           cy.wait(1000);
   
-            cy.log(`Car ${index + 1} removed.`);
+  //           cy.log(`Car ${index + 1} removed.`);
   
-            removedCars++;
+  //           removedCars++;
   
-            // Перевіряємо наявність машин після кожного видалення
-            cy.get('.car.jumbotron').should('have.length', carsCount - removedCars); // перевіряємо, що машини оновились
+  //           // Перевіряємо наявність машин після кожного видалення
+  //           cy.get('.car.jumbotron').should('have.length', carsCount - removedCars); // перевіряємо, що машини оновились
   
-            // Якщо залишились машини, чекаємо перед наступним видаленням
-            if (removedCars < carsCount) {
-              cy.wait(3000); // Чекаємо 3 секунди перед наступним видаленням
-            }
-          });
+  //           // Якщо залишились машини, чекаємо перед наступним видаленням
+  //           if (removedCars < carsCount) {
+  //             cy.wait(3000); // Чекаємо 3 секунди перед наступним видаленням
+  //           }
+  //         });
   
-          // Після того, як всі машини видалені, припиняємо очікувати на список машин
-          cy.get('.car.jumbotron', { timeout: 10000 }).should('not.exist');
-          cy.log('All cars deleted.');
+  //         // Після того, як всі машини видалені, припиняємо очікувати на список машин
+  //         cy.get('.car.jumbotron', { timeout: 10000 }).should('not.exist');
+  //         cy.log('All cars deleted.');
   
-          // Перевіряємо, чи потрібно чекати на запит getCars
-          cy.intercept('GET', '/api/cars').as('getCars');  // Заміни на правильний запит
+  //         // Перевіряємо, чи потрібно чекати на запит getCars
+  //         cy.intercept('GET', '/api/cars').as('getCars');  // Заміни на правильний запит
   
-          // Якщо більше не залишається машин, припиняємо чекати на запит
-          cy.get('.car.jumbotron').should('not.exist'); // Перевіряємо, чи всі машини видалені
-          cy.wait('@getCars', { timeout: 0 }).should('not.exist'); // Якщо машин більше немає, не чекаємо на запит
-        } else {
-          cy.log('No cars to delete.');
-        }
-      });
-    });
-  }
+  //         // Якщо більше не залишається машин, припиняємо чекати на запит
+  //         cy.get('.car.jumbotron').should('not.exist'); // Перевіряємо, чи всі машини видалені
+  //         cy.wait('@getCars', { timeout: 0 }).should('not.exist'); // Якщо машин більше немає, не чекаємо на запит
+  //       } else {
+  //         cy.log('No cars to delete.');
+  //       }
+  //     });
+  //   });
+  // }
   
   
   
   
 }
 
-export default GaragePage;
+export default GaragePage2;

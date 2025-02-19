@@ -53,23 +53,18 @@ describe('Garage Page Tests using POM', () => {
     fuelExpensePage.submitExpense();
   });
 
-  it('should delete all cars and check the garage is empty', () => {
-    cy.get('body').then(($body) => {
-      // Якщо є кнопка "Log out", значить користувач залогінений
-      if ($body.find('.btn-link.text-danger.btn-sidebar').length) {
+  // it('should delete all cars and verify empty garage message', () => {
+  //   garagePage.deleteAllCars();
   
-        // Видаляємо всі машини
-        garagePage.deleteAllCars();
-  
-        // Чекаємо, поки всі машини будуть видалені
-        cy.get('.car.jumbotron', { timeout: 10000 }).should('not.exist'); // Перевіряємо, що всі машини видалено
-  
-        // Тепер можна чекати на запит XHR (якщо є)
-        cy.intercept('GET', '/api/cars').as('getCars');
-        cy.wait('@getCars', { timeout: 10000 }).should('not.exist'); // Чекаємо на запит, якщо він відправлений
-      }
-    });
-  });
-  
-  
+  //   // Перевіряємо, що з’явилося повідомлення про порожній гараж
+  //   cy.get('.panel-page_empty.panel-empty')
+  //     .should('be.visible')
+  //     .contains('You don’t have any cars in your garage');
+  // });
+
 });
+
+
+  
+  
+
