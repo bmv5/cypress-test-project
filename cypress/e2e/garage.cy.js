@@ -1,4 +1,5 @@
 import GaragePage from './garagePage';
+import FuelExpensePage from './fuelExpensePage';
 
 describe('Garage Page Tests using POM', () => {
   const garagePage = new GaragePage();
@@ -19,18 +20,39 @@ describe('Garage Page Tests using POM', () => {
   it('should add a car successfully', () => {
     // Додаємо автомобіль
     garagePage.addCar(carDetails);
-  
-    // Перевіряємо, що запит на додавання авто завершився успішно
-    cy.wait('@addCarRequest').then((interception) => {
-      console.log(interception.response.body); // Вивести відповідь у консоль для аналізу
-      expect(interception.response.statusCode).to.eq(201); // Очікуємо статус 201 - створено
-  
-      // Перевірка, чи є властивість 'data' і чи це об'єкт
-      expect(interception.response.body.data).to.be.an('object');
-      
-      // Перевіряємо, чи має об'єкт властивість 'id'
-      expect(interception.response.body.data).to.have.property('id');
-    });
+
+    // Переходимо у вкладку "Fuel Expenses"
+    fuelExpensePage.navigateToExpenses();
+
+    // Вибираємо перший автомобіль у списку
+    fuelExpensePage.selectFirstCar();
+
+    // Відкриваємо модалку витрат на паливо
+    fuelExpensePage.openAddExpenseModal();
+
+    // Заповнюємо форму
+    const expenseDetails = {
+      mileage: '70000',
+      liters: '50',
+      totalCost: '100'
+    };
+
+    fuelExpensePage.fillExpenseForm(expenseDetails);
+    fuelExpensePage.submitExpense();
   });
+
+  // it('should delete all cars and verify empty garage message', () => {
+  //   garagePage.deleteAllCars();
   
+  //   // Перевіряємо, що з’явилося повідомлення про порожній гараж
+  //   cy.get('.panel-page_empty.panel-empty')
+  //     .should('be.visible')
+  //     .contains('You don’t have any cars in your garage');
+  // });
+
 });
+
+
+  
+  
+

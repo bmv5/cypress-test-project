@@ -1,3 +1,5 @@
+import FuelExpensePage from './fuelExpensePage'; // Імпортуємо FuelExpensePage
+
 class GaragePage {
   visitPage() {
     const username = 'guest';
