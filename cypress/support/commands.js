@@ -23,6 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+<<<<<<< HEAD
 
 Cypress.Commands.add('createExpense', (carId, liters, mileage, totalCost, reportedAt) => {
     cy.request('POST', '/api/expenses', {
@@ -38,3 +39,56 @@ Cypress.Commands.add('createExpense', (carId, liters, mileage, totalCost, report
   });
   
   
+=======
+Cypress.Commands.overwrite('type', (originalFn, element, text, options = {}) => {
+  if (options && options.sensitive) {
+    // Вимикаємо стандартний лог Cypress
+    options.log = false;
+
+    // Створюємо власний лог з маскованим введенням
+    Cypress.log({
+      $el: element,
+      name: 'type',
+      message: '*'.repeat(text.length), // Замінюємо введені символи на зірочки
+    });
+  }
+
+  return originalFn(element, text, options);
+});
+
+// Cypress.Commands.add('createExpense', (carId, expenseData) => {
+//   cy.request({
+//     method: 'POST',
+//     url: 'https://qauto.forstudy.space/api/expenses', // URL для створення витрат
+//     body: {
+//       carId: carId,
+//       reportedAt: expenseData.date, // Заміна поля `date` на `reportedAt`
+//       liters: expenseData.liters, // Кількість літрів
+//       mileage: expenseData.mileage, // Поточний пробіг
+//       totalCost: expenseData.totalCost // Загальна вартість
+//     },
+//     headers: {
+//       Cookie: `remember_me=${Cypress.env('rememberMeToken')}`, // Додаємо авторизаційний куки
+//     },
+//     withCredentials: true, // Використовуємо куки для автентифікації
+//   }).then((response) => {
+//     // Перевірка статусу
+//     expect(response.status).to.be.oneOf([200, 201]); // Дозволяємо 200 або 201
+
+//     // Перевірка наявності `data` в відповіді
+//     expect(response.body).to.have.property('data'); 
+
+//     const expense = response.body.data; // Отримуємо витрату з тіла відповіді
+
+//     // Перевірка даних витрат
+//     expect(expense).to.be.an('object');
+//     expect(expense).to.have.property('id'); // Перевіряємо, що у відповіді є `id` витрати
+//     expect(expense.carId).to.eq(carId); // Перевіряємо, що витрата пов'язана з правильним автомобілем
+//     expect(expense.mileage).to.eq(expenseData.mileage); // Перевіряємо пробіг
+//     expect(expense.totalCost).to.eq(expenseData.totalCost); // Перевіряємо загальну вартість
+//     expect(expense.liters).to.eq(expenseData.liters); // Перевіряємо кількість літрів
+
+//     return expense; // Повертаємо витрату для подальшого використання в тестах
+//   });
+// });
+>>>>>>> 94621f2d9cdeb9af74dd8fdb73918736f9071217
