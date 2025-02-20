@@ -23,38 +23,21 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-<<<<<<< HEAD
+// Cypress.Commands.overwrite('type', (originalFn, element, text, options = {}) => {
+//   if (options && options.sensitive) {
+//     // Вимикаємо стандартний лог Cypress
+//     options.log = false;
 
-Cypress.Commands.add('createExpense', (carId, liters, mileage, totalCost, reportedAt) => {
-    cy.request('POST', '/api/expenses', {
-      carId,
-      liters,
-      mileage,
-      totalCost,
-      reportedAt
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-      return response.body.data;
-    });
-  });
-  
-  
-=======
-Cypress.Commands.overwrite('type', (originalFn, element, text, options = {}) => {
-  if (options && options.sensitive) {
-    // Вимикаємо стандартний лог Cypress
-    options.log = false;
+//     // Створюємо власний лог з маскованим введенням
+//     Cypress.log({
+//       $el: element,
+//       name: 'type',
+//       message: '*'.repeat(text.length), // Замінюємо введені символи на зірочки
+//     });
+//   }
 
-    // Створюємо власний лог з маскованим введенням
-    Cypress.log({
-      $el: element,
-      name: 'type',
-      message: '*'.repeat(text.length), // Замінюємо введені символи на зірочки
-    });
-  }
-
-  return originalFn(element, text, options);
-});
+//   return originalFn(element, text, options);
+// });
 
 // Cypress.Commands.add('createExpense', (carId, expenseData) => {
 //   cy.request({
@@ -91,4 +74,15 @@ Cypress.Commands.overwrite('type', (originalFn, element, text, options = {}) => 
 //     return expense; // Повертаємо витрату для подальшого використання в тестах
 //   });
 // });
->>>>>>> 94621f2d9cdeb9af74dd8fdb73918736f9071217
+Cypress.Commands.add('createExpense', (carId, liters, mileage, totalCost, reportedAt) => {
+  cy.request('POST', '/api/expenses', {
+    carId,
+    liters,
+    mileage,
+    totalCost,
+    reportedAt
+  }).then((response) => {
+    expect(response.status).to.eq(200);
+    return response.body.data;
+  });
+});
