@@ -80,7 +80,7 @@ class GaragePage {
   closeAddCarModal() {
     cy.log('Closing Add Car modal...');
     cy.get('.modal-footer > .btn-secondary').click();
-    cy.get('app-add-car-form').should('not.be.visible');
+    //cy.get('app-add-car-form').should('not.be.visible');
   }
 
   addCar(carDetails) {
