@@ -23,6 +23,23 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+<<<<<<< HEAD
+
+Cypress.Commands.add('createExpense', (carId, liters, mileage, totalCost, reportedAt) => {
+    cy.request('POST', '/api/expenses', {
+      carId,
+      liters,
+      mileage,
+      totalCost,
+      reportedAt
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      return response.body.data;
+    });
+  });
+  
+  
+=======
 Cypress.Commands.overwrite('type', (originalFn, element, text, options = {}) => {
   if (options && options.sensitive) {
     // Вимикаємо стандартний лог Cypress
@@ -74,3 +91,4 @@ Cypress.Commands.overwrite('type', (originalFn, element, text, options = {}) => 
 //     return expense; // Повертаємо витрату для подальшого використання в тестах
 //   });
 // });
+>>>>>>> 94621f2d9cdeb9af74dd8fdb73918736f9071217

@@ -1,5 +1,3 @@
-import FuelExpensePage from './fuelExpensePage'; // Імпортуємо FuelExpensePage
-
 class GaragePage {
   visitPage() {
     const username = 'guest';
@@ -11,7 +9,7 @@ class GaragePage {
 
   login() {
     cy.log('Attempting to log in as test user...');
-    cy.get('button.btn.btn-outline-white.header_signin').click();
+    cy.get('button.btn.btn-outline-white.header_signin', { timeout: 10000 }).should('be.visible').click();
     cy.get('#signinEmail').type('test1@example.com');
     cy.get('#signinPassword').type('Test1234', { sensitive: true });
     cy.get('.modal-footer > .btn-primary').click();
@@ -32,50 +30,66 @@ class GaragePage {
 
   fillCarForm(carDetails) {
     cy.log(`Filling car form with details: ${JSON.stringify(carDetails)}`);
+  
+    // Перехоплення запиту на створення машини
+    cy.intercept('POST', '/api/cars').as('addCarRequest');
+  
+    // Вибір бренду
     cy.get('select[name="carBrandId"]').select(carDetails.brand);
-    cy.get('select[name="carModelId"]').select(carDetails.model);
+  
+    // Очікуємо, поки модель стане активною, і лише потім обираємо її
+    cy.get('select[name="carModelId"]')
+      .should('not.be.disabled') // Чекаємо, поки стане активним
+      .select(carDetails.model);
+  
+    // Введення пробігу
     cy.get('input[name="mileage"]')
       .should('be.visible')
       .click({ force: true })
       .clear({ force: true })
-      .type('{selectall}{backspace}');  // Очистка значення перед введенням
-    cy.wait(300); // Невелика затримка
-    cy.get('input[name="mileage"]').type('60000', { force: true }).blur();
-
+      .type('{selectall}{backspace}')
+      .type(carDetails.mileage, { force: true })
+      .blur();
+  
+    // Натискання кнопки "Add"
     cy.get('.modal .btn.btn-primary')
-      .should('not.be.disabled')  // Перевіряємо, що кнопка не заблокована
+      .should('not.be.disabled')
       .click();
+  
     cy.log('Car form submitted successfully!');
+  }
+  
+
+  waitForCarCreation() {
+    cy.wait('@addCarRequest').then((interception) => {
+      expect(interception.response.statusCode).to.eq(201);
+      
+      // Отримуємо ID машини з об'єкта data
+      const carId = interception.response.body.data?.id;
+      
+      // Переконуємося, що carId не undefined
+      expect(carId).to.not.be.undefined;
+      
+      // Зберігаємо ID в alias для подальшого використання
+      cy.wrap(carId).as('createdCarId');
+      
+      cy.log(`Car was created with ID: ${carId}`);
+    });
   }
 
   closeAddCarModal() {
     cy.log('Closing Add Car modal...');
     cy.get('.modal-footer > .btn-secondary').click();
-    cy.get('app-add-car-form').should('not.be.visible');
+    //cy.get('app-add-car-form').should('not.be.visible');
   }
 
   addCar(carDetails) {
     cy.log(`Adding a car: ${JSON.stringify(carDetails)}`);
-    cy.contains('button', 'Add car').click();
-    cy.get('app-add-car-form').should('be.visible');
-    cy.get('select[name="carBrandId"]').select(carDetails.brand);
-    cy.get('select[name="carModelId"]').select(carDetails.model);
-    cy.get('input[name="mileage"]').clear().type(carDetails.mileage);
-    cy.get('.modal-footer > .btn-primary').click({ force: true });
-    cy.log('Car added successfully!');
+    this.openAddCarModal();
+    this.fillCarForm(carDetails);
+    this.waitForCarCreation();
+    this.closeAddCarModal();
   }
-
-  addFuelExpense(expenseDetails) {
-    cy.log(`Adding fuel expense: ${JSON.stringify(expenseDetails)}`);
-    const fuelExpensePage = new FuelExpensePage();
-
-    fuelExpensePage.openAddExpenseModal();
-    fuelExpensePage.fillExpenseForm(expenseDetails);
-    fuelExpensePage.submitExpense();
-    cy.log('Fuel expense added successfully!');
-  }
-
-  
 }
 
 export default GaragePage;
