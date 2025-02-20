@@ -3,7 +3,7 @@ import FuelExpensePage from './fuelExpensePage'; // Імпортуємо FuelExp
 class GaragePage {
   visitPage() {
     const username = 'guest';
-    const password = 'welcomeqauto';
+    const password = 'welcome2qauto';
     const url = `https://${username}:${password}@qauto.forstudy.space/`; 
     cy.log(`Visiting as guest: ${url}`);
     cy.visit(url);
@@ -75,61 +75,6 @@ class GaragePage {
     cy.log('Fuel expense added successfully!');
   }
 
-  // deleteAllCars() {
-  //   cy.url().then((currentUrl) => {
-  //     const baseUrl = Cypress.config('baseUrl') || 'https://qauto.forstudy.space';
-  //     const garageUrl = `${baseUrl}/panel/garage`;
-  
-  //     if (!currentUrl.includes('/panel/garage')) {
-  //       cy.visit(garageUrl);
-  //     }
-  
-  //     cy.get('body').then(($body) => {
-  //       if ($body.find('.car.jumbotron').length > 0) {
-  //         cy.log('Found cars in garage. Starting deletion process...');
-          
-  //         cy.intercept('DELETE', '/api/cars/*').as('deleteCar');
-  
-  //         function removeNextCar() {
-  //           cy.get('.car.jumbotron').first().within(() => {
-  //             cy.get('button.car_edit').click();
-  //           });
-  
-  //           cy.get('button.btn-outline-danger').contains('Remove car').click();
-  //           cy.get('button.btn-danger').contains('Remove').click();
-  
-  //           // Чекаємо, поки запит завершиться
-  //           cy.wait('@deleteCar', { timeout: 10000 });
-  
-  //           // Чекаємо, поки машина зникне з DOM
-  //           cy.get('.car.jumbotron').should('have.length.lessThan', $body.find('.car.jumbotron').length);
-  
-  //           // Рекурсивно викликаємо метод, якщо ще є машини
-  //           cy.get('.car.jumbotron').then((cars) => {
-  //             if (cars.length > 0) {
-  //               removeNextCar();
-  //             }
-  //           });
-  //         }
-  
-  //         removeNextCar();
-  
-  //         // Остаточна перевірка, що гараж порожній
-  //         cy.get('.car.jumbotron', { timeout: 10000 }).should('not.exist');
-  //         cy.get('.panel-page_empty.panel-empty').should('be.visible')
-  //           .contains('You don’t have any cars in your garage');
-  //       } else {
-  //         cy.log('No cars to delete.');
-  //       }
-  //     });
-  //   });
-  // }
-  
-
-
-  
-  
-  
   
 }
 

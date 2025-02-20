@@ -67,7 +67,7 @@ class GaragePage2 {
 
   addFuelExpense(expenseDetails) {
     cy.log(`Adding fuel expense: ${JSON.stringify(expenseDetails)}`);
-    const fuelExpensePage = new FuelExpensePage();
+    const fuelExpensePage = new FuelExpensePage2();
 
     fuelExpensePage.openAddExpenseModal();
     fuelExpensePage.fillExpenseForm(expenseDetails);

@@ -1,23 +1,35 @@
-import GaragePage from './garagePage';
-import FuelExpensePage from './fuelExpensePage';
+// import GaragePage from './garagePage';
+// import FuelExpensePage from './fuelExpensePage';
+import GaragePage from '../support/garagePage';
+import FuelExpensePage from '../support/fuelExpensePage';
 
 describe('Garage Page Tests using POM', () => {
   const garagePage = new GaragePage();
-  const carDetails = {
-    brand: 'Audi',
-    model: 'TT',
-    mileage: '50000'
-  };
-
+  const fuelExpensePage = new FuelExpensePage();
+  
   beforeEach(() => {
     garagePage.visitPage();
     garagePage.login();
     garagePage.checkGaragePageLoaded();
-    // Перехоплюємо запит на додавання автомобіля
-    cy.intercept('POST', '/api/cars').as('addCarRequest');
   });
-
-  it('should add a car successfully', () => {
+  
+  it('should open the Add Car modal, enter values, check validation, and close it', () => {
+    const carDetails = {
+      brand: 'Audi',
+      model: 'TT',
+      mileage: '50000'
+    };
+    garagePage.openAddCarModal();
+    garagePage.fillCarForm(carDetails);
+    garagePage.closeAddCarModal();
+  });
+  
+  it('should add a car, open the fuel expense modal, fill the form, and add expense', () => {
+    const carDetails = {
+      brand: 'Audi',
+      model: 'TT',
+      mileage: '50000'
+    };
     // Додаємо автомобіль
     garagePage.addCar(carDetails);
 
@@ -41,15 +53,7 @@ describe('Garage Page Tests using POM', () => {
     fuelExpensePage.submitExpense();
   });
 
-  // it('should delete all cars and verify empty garage message', () => {
-  //   garagePage.deleteAllCars();
   
-  //   // Перевіряємо, що з’явилося повідомлення про порожній гараж
-  //   cy.get('.panel-page_empty.panel-empty')
-  //     .should('be.visible')
-  //     .contains('You don’t have any cars in your garage');
-  // });
-
 });
 
 

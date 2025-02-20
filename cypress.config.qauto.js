@@ -5,7 +5,7 @@ module.exports = defineConfig({
     baseUrl: "https://qauto.forstudy.space", // Вказуємо базовий URL
     env: {
       username: "guest",
-      password: "welcome2qauto"
+      password: "welcomeqauto"
     }
   },
   reporter: "mochawesome",
