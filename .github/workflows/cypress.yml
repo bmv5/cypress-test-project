@@ -1,0 +1,34 @@
+name: Run Cypress Tests
+
+on:
+  push:
+    branches:
+      - main  # Запуск при пуші в гілку main
+  pull_request:
+    branches:
+      - main  # Запуск при створенні pull request у main
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest  # Використовуємо останню версію Ubuntu
+
+    services:
+      - name: cypress/base:12.18.3
+        options: --mount type=bind,source=${{ github.workspace }},target=/e2e  # Монтуючи репозиторій у контейнер
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2  # Крок для клонування репозиторію
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Вказуємо версію Node.js
+
+      - name: Install dependencies
+        run: |
+          npm install  # Встановлення залежностей
+
+      - name: Run Cypress Tests
+        run: |
+          npx cypress run --headless --browser chrome  # Запуск тестів у headless режимі на браузері Chrome
