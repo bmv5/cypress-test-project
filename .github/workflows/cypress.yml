@@ -3,10 +3,10 @@ name: Cypress Tests
 on:
   push:
     branches:
-      - setup-cypress  # Викликається при push на гілку setup-cypress
+      - setup-cypress  # Викликається при push на гілку setup-cypress, вона в мене типу головна
   pull_request:
     branches:
-      - setup-cypress  # Викликається при push на гілку setup-cypress
+      - setup-cypress  # Викликається при push на гілку setup-cypress, вона в мене типу головна
 
 jobs:
   cypress-run:
