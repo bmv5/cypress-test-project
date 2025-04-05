@@ -21,7 +21,7 @@
   "homepage": "https://github.com/bmv5/cypress-test-project#readme",
   "description": "",
   "devDependencies": {
-    "cypress": "^14.0.2",
+    "cypress": "^14.2.1",
     "mochawesome": "^7.1.3",
     "mochawesome-merge": "^5.0.0",
     "mochawesome-report-generator": "^6.2.0"
